@@ -9,4 +9,10 @@ select
     cast(SR_Flag as integer) as SR_Flag,
     cast(Affiliated_base_number	 as string) as Affiliated_base_number
     from {{ source('staging','fhv_tripdata') }}
-limit 100
+
+-- dbt build --m <model.sql> --var 'is_test_run: false'
+{% if var('is_test_run', default=true) %}
+
+  limit 100
+
+{% endif %}
